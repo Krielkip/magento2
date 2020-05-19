@@ -198,8 +198,12 @@ class Encryptor implements EncryptorInterface
     /**
      * @inheritdoc
      */
-    public function getHash($password, $salt = false, $version = self::HASH_VERSION_LATEST)
+    public function getHash($password, $salt = false, $version = null)
     {
+        if ( is_null($version) ) {
+            $version = $this->getLatestHashVersion();
+        }
+   
         if (!isset($this->hashVersionMap[$version])) {
             $version = self::HASH_VERSION_SHA256;
         }
